@@ -72,7 +72,7 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
 			preparedStm.executeUpdate();
 
 		}	catch (SQLException sex)	{
-			throw new DAOSysException("Error adding customer <" + model.getId() + "> " + sex.getMessage());
+			throw new DAOSysException("Error adding composer <" + model.getId() + "> " + sex.getMessage());
 
 		}	finally	{
 			try	{
@@ -219,7 +219,7 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
  			int rowCount = preparedStm.executeUpdate();
 			if (rowCount == 0)	{
  				throw new DAOSysException(
- 					"Failed to store state for Customer <"
+ 					"Failed to store state for Comopser <"
  					+ model.getId() + ">");
  			}
 
@@ -249,8 +249,8 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
 
 	
 	/**
-	 * Called by remove() to remove the state for a Customer entity from the database.
-	 *	@param	primarykey	The primary key of the Customer entity
+	 * Called by remove() to remove the state for a composer entity from the database.
+	 *	@param	primarykey	The primary key of the composer entity
 	 *	to be removed from the data store.
 	 *	@param	deleteStm	Statement to remove entity data from the data store.
 	 *	@throws	DAOSysException
@@ -269,7 +269,7 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
 
 			if (result == 0)	{
 				throw new SQLException(
-						"Failed to remove Customer <"
+						"Failed to remove Composer <"
 						+ pk.toString() + ">.");
 			}
 
@@ -315,7 +315,7 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
 
 		}	catch (SQLException sex)	{
 			throw new DAOSysException(
-						"dbCountTotalCustomers() SQL Exception\n"
+						"dbCountTotalcomposers() SQL Exception\n"
 						+ sex.getMessage());
 
 		}	finally	{
@@ -335,37 +335,33 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
 	private final static boolean _debug = false;
 
 	private static String SELECT_DISTINCT_STM =
-		"SELECT DISTINCT number FROM " + "Customer";
+		"SELECT DISTINCT id FROM " + "Composer";
 	
 	private static String DELETE_STM =
-		"DELETE FROM " + "Customer"
-		+ " WHERE number = ?";
+		"DELETE FROM " + "Composer"
+		+ " WHERE id = ?";
 	
 	private static String UPDATE_STM =
-		"UPDATE " + "Customer"
+		"UPDATE " + "Composer"
 		+ " SET "
-		+ "name = ? "
-		+ "address = ? "
-		+ "phoneNo = ? "
-		+ "where number = ?";
+		+ "CompserName = ? "
+		+ "where id = ?";
 
 	private static String SELECT_ALL_STM =
-		"SELECT DISTINCT number " + "FROM " + "Customer";
+		"SELECT DISTINCT id " + "FROM " + "Composer";
 	
 	
 	
 	private static String SELECT_STM = "SELECT "
-		+ " number, "
-		+ " name, "
-		+ " address, "
-		+ " phoneNo "
-		+ " FROM CUSTOMER "
-		+ " WHERE number = ?";
+		+ " id, "
+		+ " ComposerName, "
+		+ " FROM COMPOSER "
+		+ " WHERE id = ?";
 		
 	private static String INSERT_STM = "INSERT INTO "
-		+ "Customer"
+		+ "Composer"
 		+ " VALUES "
-		+ "( ?, ?, ?, ? )";
+		+ "( ?, ? )";
 	
 	
 }	/*	End of Class:	ComposerDAO.java				*/
