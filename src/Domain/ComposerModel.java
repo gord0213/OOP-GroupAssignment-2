@@ -16,8 +16,8 @@ public class ComposerModel extends CorePersistenceModel<ComposerPK> {
 	 * @param name
 	 * @return 
 	 */
-	public CustomerModel(int id,String name) {
-		this(new CustomerPK(id), name)
+	public ComposerModel(int id,String name) {
+		this(new ComposerPK(id), name);
 	}
 
 	/**
@@ -26,12 +26,12 @@ public class ComposerModel extends CorePersistenceModel<ComposerPK> {
 	 * @param primarykey
 	 * @param name
 	 */
-	public CustomerModel(ComposerPK primarykey,
-								String name,
+	public ComposerModel(ComposerPK primarykey,
+								String name
 								) {
 		super();
 		setPrimarykey(primarykey);
-		setName(name);
+		setComposerName(name);
 		
 	}
 	

@@ -113,7 +113,7 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
 		try	{
 			connection = connectToDB();
 			preparedStm = connection.prepareStatement(selectStm);
-			preparedStm.setString(1, pk.getNumber());
+			preparedStm.setInt(1, pk.getId());
 			rs = preparedStm.executeQuery();
 
 			result = rs.next();
@@ -171,7 +171,7 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
 
 			list = new ArrayList<ComposerPK>();
 			while (rs.next())	{
-				list.add(new ComposerPK(rs.getString(1)));
+				list.add(new ComposerPK(rs.getInt(1)));
 			}
 
 		}	catch (SQLException sex)	{
@@ -264,7 +264,7 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
 		try	{
 			connection = connectToDB();
 			preparedStm = connection.prepareStatement(deleteStm);
-			preparedStm.setString(1, pk.getNumber());
+			preparedStm.setInt(1, pk.getId());
 			result = preparedStm.executeUpdate();
 
 			if (result == 0)	{

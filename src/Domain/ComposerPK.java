@@ -19,13 +19,13 @@ public class ComposerPK implements java.io.Serializable	{
 	 *	Constructor to build a primary key from an Number.
 	 *	@param	number	The customer number.
 	 */
-	public ComposerPK(String id)	{ this.id = id;		}
+	public ComposerPK(int id)	{ this.id = id;		}
 
 	/**
 	 *	Constructor to build a primary key from a another CustomerPK argument.
 	 *	@param	primarykey	A CustomerPK object.
 	 */
-	public ComposerPK(ComposerPK primarykey)	{ id = primarykey.getid();		}
+	public ComposerPK(ComposerPK primarykey)	{ id = primarykey.getId();		}
 
 
 	/* ACCESSORS	--------------------------------------------------	*/
@@ -33,7 +33,7 @@ public class ComposerPK implements java.io.Serializable	{
 	 *	Get the customer Number.
 	 *	@return	The customer number.
 	 */
-	public String getid()	{ return id;		}
+	public int getId()	{ return id;}
 
 
 	/* BEHAVIOR	-----------------------------------------------------	*/
@@ -41,7 +41,7 @@ public class ComposerPK implements java.io.Serializable	{
 	 *	Convert this primary key object into a meaningful string.
 	 *	@return	This object as a string.
 	 */
-	public String toString()	{ return	id;		}
+	public String toString()	{ return	Integer.toString(id);		}
 
 
 	/**
@@ -51,9 +51,9 @@ public class ComposerPK implements java.io.Serializable	{
 	 *	false, they are not equal.
 	 */
 	public boolean equals(Object obj)	{
-		return	obj instanceof ComposerPK
-			&&	getid().equals(((ComposerPK) obj).getid()
-					);
+		return obj instanceof ComposerPK && getId() == ((ComposerPK) obj).getId();
+				
+				
 	}
 
 	/**
@@ -65,13 +65,13 @@ public class ComposerPK implements java.io.Serializable	{
 	 *	@return	A hash code value for the object.
 	 */
 	public int hashCode() {
-		return	getid().hashCode();
+		 return	getId();
 	}
 
 
 
 	/*	Customer Entity PRIMARY KEY FIELDS ------------------------------	*/
-	/** Customer number.																	*/
-	private String id;
+	/** Composer id.																	*/
+	private int id;
 
 }	/*	End of Class:	CustomerPK.java				*/
