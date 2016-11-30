@@ -1,5 +1,7 @@
 package Domain;
 
-public class ComposistionsDAO {
+import sql.CoreDAOImpl;
+
+public class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, ComposistionsPK>{
 
 }
