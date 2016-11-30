@@ -23,15 +23,17 @@ public class Movements		{
 	 *	Create an instance of a new movements.
 	 *	@return	An instance of a movements entity.
 	 *	@throws sql.CreateException 
-	 * @param	number	The movements number.
-	 *	@param	name		The name of the movements. 
+	 * 	@param	composer the composer for the composition.
+	 * 	@param	composition	the composition this movement is part of
+	 *	@param	number	The movement's number.
+	 *	@param	name	The movement's name.
 	 */
-	public static Movements create(String number,
+	public static Movements create(String composer, String composition, String number,
 											String name)
 								throws CreateException				{
-		if (_debug) System.out.println("C:create:" + number);
+		if (_debug) System.out.println("C:create:" + composer + ", " + composition + ", " + number + ", " + name);
 
-		MovementsModel model = new MovementsModel(number, name);
+		MovementsModel model = new MovementsModel(composer, composition, number, name);
 		MovementsDAO dao = null;
 		try	{
 			dao = (MovementsDAO) DAOFactory.getDAO(className);
@@ -70,10 +72,10 @@ public class Movements		{
 			model = (MovementsModel) dao.dbSelectByPrimaryKey(primarykey);
 			movements = new Movements(model);
 
-//			/* Add boat references for this movements.				*/
-//			movements.setBoats( ((ArrayList<Boat>) Boat.findByCustomer(movements)) );
+	
 
-			/*	Add lease references for this movements.			*/
+
+			
 
 			
 			
@@ -157,8 +159,8 @@ public class Movements		{
 	 *	@param	name
 
 	 */
-	private Movements(String number, String name)	{
-		this(new MovementsModel(number, name));
+	private Movements(String composer, String composition, String number, String name)	{
+		this(new MovementsModel(composer, composition, number, name));
 	}
 
 	/**
@@ -173,27 +175,21 @@ public class Movements		{
 
 
 	/* ACCESSORS	--------------------------------------------------	*/
-	public MovementsModel getModel()				{ return model;												}
-	public MovementsPK getPrimaryKey()			{ return getModel().getPrimarykey();					}
-	public String getNumber()						{ return getModel().getPrimarykey().getNumber(); 	}
- 	public String getName()							{ return getModel().getName();							}
+	public MovementsModel getModel()				{ return model;}
+	public MovementsPK getPrimaryKey()				{ return getModel().getPrimarykey();}
+	public String getComposer()						{ return getModel().getPrimarykey().getComposer();}
+ 	public String getComposition()					{ return getModel().getComposition();}
+	public String getNumber()						{ return getModel().getPrimarykey().getNumber();}
+ 	public String getName()							{ return getModel().getName();}
 					
 
-//	private ArrayList<Lease> getLeases(){
-//		ArrayList<Lease> list = new ArrayList<Lease>();
-////		list = Lease.findByCustomer(this);
-//		return list;
-//	}
+
 
 	
 	/* MODIFIERS	--------------------------------------------------	*/
 	private void setModel(MovementsModel model)	{ this.model = model;								}
 
-	private void setPrimarykey(MovementsPK pk)	{ getModel().setPrimarykey(pk);						}
-	public void setName(String name)				{
-		getModel().setName(name);
-		update();
-	}
+
 
 
 
@@ -244,11 +240,10 @@ public class Movements		{
 	
 	public String toString()	{ return this.toString(", ");				}
 	public String toString(String sep)	{
-		return "number=" + getNumber()
-				+ sep + "name=" + getName()
-				
-			
-			;
+		return "composer=" + getComposer()
+				+ sep + "composition" + getComposition()
+				+ sep + "number=" + getNumber()
+				+ sep + "name=" + getName();
 	}
 
 
@@ -308,7 +303,7 @@ public class Movements		{
 	private static final boolean _debug = false;
 
 	/** Class name for static method purposes.								*/
-	private static String className = "marina.Movements";
+	private static String className = "Domain.Movements";
 	
 	/** Persistence model for a movements object.								*/
 	private MovementsModel model;

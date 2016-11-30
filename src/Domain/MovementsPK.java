@@ -15,31 +15,61 @@ public class MovementsPK implements java.io.Serializable	{
 
 	/**
 	 *	Constructor to build a primary key from an Number.
-	 *	@param	number	The movements number.
+	 * 	@param	composer the composer for the composition.
+	 * 	@param	composition	the composition this movement is part of
+	 *	@param	number	The movement's number.
+	 *	@param	name	The movement's name.
 	 */
-	public MovementsPK(String number)	{ this.number = number;		}
+	public MovementsPK(String composer, String Composition, String number, String name)	{
+		this.composer = composer;
+		this.composition = composition;
+		this.name = name;
+		this.number = number;		}
 
 	/**
 	 *	Constructor to build a primary key from a another MovementsPK argument.
 	 *	@param	primarykey	A MovementsPK object.
 	 */
-	public MovementsPK(MovementsPK primarykey)	{ number = primarykey.getNumber();		}
+	public MovementsPK(MovementsPK primarykey)	{
+		composer = primarykey.getComposer();
+		composition = primarykey.getComposition();
+		name = primarykey.getName();
+		number = primarykey.getNumber();		}
 
 
 	/* ACCESSORS	--------------------------------------------------	*/
 	/**
-	 *	Get the movements Number.
-	 *	@return	The movements number.
+	 *	Get the movement's composition's composer.
+	 *	@return	The movement's composition's composer.
+	 */
+	public String getComposer()	{ return composer;		}
+
+	/**
+	 *	Get the movement's composition.
+	 *	@return	The movement's composition.
+	 */
+	public String getComposition()	{ return composition;		}
+
+	/**
+	 *	Get the movement's Number.
+	 *	@return	The movement's number.
 	 */
 	public String getNumber()	{ return number;		}
 
+	/**
+	 *	Get the movement's Name.
+	 *	@return	The movement's name.
+	 */
+	public String getName()	{ return name;		}
+
+	
 
 	/* BEHAVIOR	-----------------------------------------------------	*/
 	/**
 	 *	Convert this primary key object into a meaningful string.
 	 *	@return	This object as a string.
 	 */
-	public String toString()	{ return	number;		}
+	public String toString()	{ return	composer + ", " + composition + ", " + number + ", " + name;		}
 
 
 	/**
@@ -69,7 +99,15 @@ public class MovementsPK implements java.io.Serializable	{
 
 
 	/*	Movements Entity PRIMARY KEY FIELDS ------------------------------	*/
-	/** Movements number.																	*/
+	/** 	
+	 *	the composer's name for the composition.
+	 *	the composition name this movement is part of
+	 *	The movement's number.
+	 *	The movement's name.
+	 */
+	private String composer;
+	private String composition;
 	private String number;
+	private String name;
 
 }	/*	End of Class:	MovementsPK.java				*/

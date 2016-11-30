@@ -16,14 +16,13 @@ public class MovementsModel extends SQL.CorePersistenceModel<MovementsPK>	{
 	/**
 	 * Creates a new instance of MovementsModel
 	 * 
+	 * @param composer
+	 * @param composition
 	 * @param number
-	 * @param name
-	 * @param address
-	 * @param phoneno 
+	 * @param name 
 	 */
-	public MovementsModel(String number,
-								String name) {
-		this(new MovementsPK(number), name);
+	public MovementsModel(String composer, String composition, String number, String name) {
+		this(new MovementsPK(composer, composition,number, name));
 	}
 
 	/**
@@ -34,31 +33,28 @@ public class MovementsModel extends SQL.CorePersistenceModel<MovementsPK>	{
 	 * @param address
 	 * @param phoneno 
 	 */
-	public MovementsModel(MovementsPK primarykey,
-								String name){
+	public MovementsModel(MovementsPK primarykey){
 		super();
 		setPrimarykey(primarykey);
-		setName(name);
+		
 		
 	}
 	
 	
 	/* ACCESSORS	--------------------------------------------------	*/
-	public String getNumber()				{ return getPrimarykey().getNumber();	}
- 	public String getName()					{ return name;									}
+	public String getComposer()				{ return getPrimarykey().getComposer();}
+	public String getComposition()			{ return getPrimarykey().getComposition();}
+	public String getNumber()				{ return getPrimarykey().getNumber();}
+ 	public String getName()					{ return getPrimarykey().getName();}
 	
 
 
 	/* MODIFIERS	--------------------------------------------------	*/
-	public void setName(String name)				{ this.name = name;					}
 
 
 	
 	/* ATTRIBUTES	--------------------------------------------------	*/
-	/** Name of this movements.														*/
- 	private String name;
- 	/** Address for this movements.												*/
-
+											
 
 }
 

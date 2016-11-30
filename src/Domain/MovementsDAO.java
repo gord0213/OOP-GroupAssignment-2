@@ -60,27 +60,7 @@ public class MovementsDAO extends CoreDAOImpl<MovementsModel, MovementsPK>	{
 	 *	@throws	DAOSysException
 	 */
 	public void dbInsert(MovementsModel model, String insertStm) throws DAOSysException		{
-		PreparedStatement preparedStm = null;
-		Connection connection = null;
-
-		try	{
-			connection = connectToDB();
-			preparedStm = connection.prepareStatement(insertStm);
-			preparedStm.setString(1, model.getNumber());
-			preparedStm.setString(2, model.getName());
-			
-			preparedStm.executeUpdate();
-
-		}	catch (SQLException sex)	{
-			throw new DAOSysException("Error adding movements <" + model.getNumber() + "> " + sex.getMessage());
-
-		}	finally	{
-			try	{
-				releaseAll(null, preparedStm, connection);
-			} catch (Exception ex)	{
-				System.err.println("Error releasing resources <" + ex.toString());
-			}
-		}
+		//don't need this
 	}
 
 	/**
@@ -118,8 +98,7 @@ public class MovementsDAO extends CoreDAOImpl<MovementsModel, MovementsPK>	{
 
 			result = rs.next();
 			if (result)	{
-				model.setPrimarykey(new MovementsPK(rs.getString(1)));
-				model.setName(rs.getString(2));
+				
 
 
 			}	else	{
@@ -171,7 +150,7 @@ public class MovementsDAO extends CoreDAOImpl<MovementsModel, MovementsPK>	{
 
 			list = new ArrayList<MovementsPK>();
 			while (rs.next())	{
-				list.add(new MovementsPK(rs.getString(1)));
+				list.add(new MovementsPK(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
 			}
 
 		}	catch (SQLException sex)	{
@@ -214,9 +193,10 @@ public class MovementsDAO extends CoreDAOImpl<MovementsModel, MovementsPK>	{
 			preparedStm = connection.prepareStatement(updateStm);
 
 			/*	Grab values from persistent fields to store in database	*/
-			preparedStm.setString(1, model.getName());
-
-			preparedStm.setString(4, model.getNumber());
+			preparedStm.setString(1, model.getComposer());
+			preparedStm.setString(2, model.getComposition());
+			preparedStm.setString(3, model.getNumber());
+			preparedStm.setString(4, model.getName());
 			
  			int rowCount = preparedStm.executeUpdate();
 			if (rowCount == 0)	{
@@ -346,8 +326,9 @@ public class MovementsDAO extends CoreDAOImpl<MovementsModel, MovementsPK>	{
 	private static String UPDATE_STM =
 		"UPDATE " + "MOVEMENTS"
 		+ " SET "
+		+ "composer = ? "
+		+ "composition = ?"
 		+ "name = ? "
-
 		+ "where number = ?";
 
 	private static String SELECT_ALL_STM =
@@ -356,9 +337,10 @@ public class MovementsDAO extends CoreDAOImpl<MovementsModel, MovementsPK>	{
 	
 	
 	private static String SELECT_STM = "SELECT "
+		+ "composer, "
+		+ "composition,"
 		+ " number, "
-		+ " name, "
-
+		+ " name "
 		+ " FROM MOVEMENTS "
 		+ " WHERE number = ?";
 		
