@@ -2,6 +2,7 @@ package Domain;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 
@@ -27,13 +28,27 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Co
 	public ComposistionModel dbSelectByPrimaryKey(ComposistionsPK primarykey)
 			throws DAOSysException, NoSuchEntityException {
 			
-		return dbSelectByPrimaryKey(primarykey, );
+		return dbSelectByPrimaryKey(primarykey, SELECT_STM);
 	}
 
 	@Override
 	public ComposistionModel dbSelectByPrimaryKey(ComposistionsPK primarykey, String selectStm)
 			throws DAOSysException, NoSuchEntityException {
-		// TODO Auto-generated method stub
+		ComposistionsPK pk = (ComposistionsPK) primarykey;
+		Connection connection = null;
+		PreparedStatement preparedStm = null;
+		ResultSet rs = null;
+		ComposistionModel model = null;
+		boolean result = false;
+		if (selectStm == null){
+			selectStm = SELECT_STM;
+		}
+		try{
+			connection = connectToDB();
+			
+		}catch(SQLException exception){
+			throw new DAOSysException(msg)
+		}
 		return null;
 	}
 
@@ -80,5 +95,6 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Co
 	}
 	
 	
-	public static final String SELECT_STM = "SELECT" + 
+	public static final String SELECT_STM = "SELECT" + "composer, " + "compositionName "
+										  + "FROM " + "Composition " + "WHERE composer = ?";
 }
