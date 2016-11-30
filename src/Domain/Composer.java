@@ -1,5 +1,5 @@
 /*
- *  @(#)Composor.java
+ *  @(#)Composer.java
  *
  *
  */
@@ -15,9 +15,9 @@ import SQL.FinderException;
 import SQL.NoSuchEntityException;
 
 /**
- * Conductor class
+ * Composer class
  * Demonstrates the use of the provided DAO framework.
- * 	includes basic Conductor attributes plus
+ * 	includes basic Composer attributes plus
  *			Boat reference attribute and accessors
  *			and Lease reference attribute and accessors
  */
@@ -26,31 +26,31 @@ public class Composer		{
 	/*	Basic Creators, finders, and removers									*/
 	/* CREATORS	-----------------------------------------------------	*/
 	/**
-	 *	Create an instance of a new Conductor.
-	 *	@return	An instance of a Conductor entity.
+	 *	Create an instance of a new Composer.
+	 *	@return	An instance of a Composer entity.
 	 *	@throws sql.CreateException 
-	 * @param	number	The Conductor number.
-	 *	@param	name		The name of the Conductor. 
-	 *	@param	address	The address for this Conductor.
-	 *	@param	phoneno	The phone number for this Conductor.
+	 * @param	number	The Composer number.
+	 *	@param	name		The name of the Composer. 
+	 *	@param	address	The address for this Composer.
+	 *	@param	phoneno	The phone number for this Composer.
 	 */
-	public static Composer create(String ComposorName)
+	public static Composer create(int id,String ComposerName)
 								throws CreateException				{
-		if (_debug) System.out.println("C:create:" + ComposorName);
+		if (_debug) System.out.println("C:create:" + ComposerName);
 
-		Composer model = new ComposorModel(ComposorName);
-		CDAO dao = null;
+		ComposerModel model = new ComposerModel(id,ComposerName);
+		ComposerDAO dao = null;
 		try	{
-			dao = (ConductorDAO) DAOFactory.getDAO(className);
+			dao = (ComposerDAO) DAOFactory.getDAO(className);
 			dao.dbInsert(model);
 			
-			/* Initially this Conductor has no boats or leases			*/
+			/* Initially this Composer has no boats or leases			*/
 
 		} catch (Exception sqlex)	{
 			throw new CreateException(sqlex.getMessage());
 		}
 
-		return	new Conductor(model);
+		return	new Composer(model);
 	}
 	
 	/* FINDERS	-----------------------------------------------------	*/
@@ -59,28 +59,28 @@ public class Composer		{
 	 *	and instance to the entity, or a collection of instances.
 	 */
 	/**
-	 *	Find a Conductor by primary key.
-	 *	@return	An instance of a Conductor entity.
+	 *	Find a Composer by primary key.
+	 *	@return	An instance of a Composer entity.
 	 *	@throws sql.FinderException 
 	 * @throws sql.NoSuchEntityException 
-	 * @param	primarykey	The primary key for the Conductor to find.
+	 * @param	primarykey	The primary key for the Composer to find.
 	 */
-	public static Conductor findByPrimarykey(ConductorPK primarykey)
+	public static Composer findByPrimarykey(ComposerPK primarykey)
 								throws FinderException, NoSuchEntityException			{
 		if (_debug) System.out.println("C:findByPrimarykey(" + primarykey + ")");
 
-		ConductorModel model = null;
-		Conductor Conductor = null;
-		ConductorDAO dao = null;
+		ComposerModel model = null;
+		Composer Composer = null;
+		ComposerDAO dao = null;
 		try	{
-			dao = (ConductorDAO) DAOFactory.getDAO(className);
-			model = (ConductorModel) dao.dbSelectByPrimaryKey(primarykey);
-			Conductor = new Conductor(model);
+			dao = (ComposerDAO) DAOFactory.getDAO(className);
+			model = (ComposerModel) dao.dbSelectByPrimaryKey(primarykey);
+			Composer = new Composer(model);
 
-//			/* Add boat references for this Conductor.				*/
-//			Conductor.setBoats( ((ArrayList<Boat>) Boat.findByConductor(Conductor)) );
+//			/* Add boat references for this Composer.				*/
+//			Composer.setBoats( ((ArrayList<Boat>) Boat.findByComposer(Composer)) );
 
-			/*	Add lease references for this Conductor.			*/
+			/*	Add lease references for this Composer.			*/
 
 			
 			
@@ -88,38 +88,31 @@ public class Composer		{
 			throw new FinderException(sqlex.getMessage());
 		}
 
-		return Conductor;
+		return Composer;
 	}
 
 	/**
-	 *	Find all Conductor entities.
-	 *	@return	A collection of Conductor instances.
+	 *	Find all Composer entities.
+	 *	@return	A collection of Composer instances.
 	 *	@throws	FinderException
 	 * @throws	CreateException
 	 */
-	public static Collection<Conductor> findAll() throws FinderException, CreateException			{
-		ArrayList<Conductor> listOfConductors = new ArrayList<Conductor>();
-		ConductorDAO dao = null;
+	public static Collection<Composer> findAll() throws FinderException, CreateException			{
+		ArrayList<Composer> listOfComposers = new ArrayList<Composer>();
+		ComposerDAO dao = null;
 	
 		try	{
-			dao = (ConductorDAO) DAOFactory.getDAO(className);
-			Collection<ConductorPK> c = dao.dbSelectAll();
-			Iterator<ConductorPK> itr = c.iterator();
+			dao = (ComposerDAO) DAOFactory.getDAO(className);
+			Collection<ComposerPK> c = dao.dbSelectAll();
+			Iterator<ComposerPK> itr = c.iterator();
 			while (itr.hasNext())	{
-				ConductorPK cpk = itr.next();
+				ComposerPK cpk = itr.next();
 				try	{
-					Conductor conductor = Conductor.findByPrimarykey(cpk);
-//					/* Add boat references for this Conductor.				*/
-//					Conductor.setBoats(((ArrayList<Boat>) Boat.findByConductor(Conductor)));
-
-//					/* Add leases for this Conductor							*/
-					
-					
-					/* Add this Conductor to the list.						*/
-					listOfConductors.add(conductor);
+					Composer composer = Composer.findByPrimarykey(cpk);
+					listOfComposers.add(composer);
 
 				} catch (Exception ex)	{
-					System.err.println("Conductor: Error processing list <" + ex.toString());
+					System.err.println("Composer: Error processing list <" + ex.toString());
 				}
 			}
 
@@ -128,25 +121,25 @@ public class Composer		{
 		}
 
 		
-		return listOfConductors;
+		return listOfComposers;
 	}
 	
 	
 	/* REMOVERS	-----------------------------------------------------	*/
 	/**
-	 *	Remove a Conductor by primary key.
-	 *	@param	primarykey	The primary key for the Conductor to find.
+	 *	Remove a Composer by primary key.
+	 *	@param	primarykey	The primary key for the Composer to find.
 	 *	@throws	NoSuchEntiryException
 	 * @throws	DAOSysException
 	 */
-	private static int removeByPrimarykey(ConductorPK primarykey)
+	private static int removeByPrimarykey(ComposerPK primarykey)
 								throws	DAOSysException, NoSuchEntityException	{
 		int rc = 0;
-		ConductorDAO dao = null;
+		ComposerDAO dao = null;
 		
 		/*	remove boats first etc...				*/
 		
-		dao = (ConductorDAO) DAOFactory.getDAO(className);
+		dao = (ComposerDAO) DAOFactory.getDAO(className);
 		rc = dao.dbRemove(primarykey);
 		
 		return rc;
@@ -157,7 +150,7 @@ public class Composer		{
 	/**
 	 *	Default constructor
 	 */
-	private Conductor()	{ super();		}
+	private Composer()	{ super();		}
 
 	/**
 	 *	Parameterized constructor.
@@ -165,73 +158,47 @@ public class Composer		{
 	 *	@param	address
 	 *	@param	phoneno
 	 */
-	private Conductor(String ID, String name)	{
-		this(new ConductorModel(ID, name));
+	private Composer(int id, String name)	{
+		this(new ComposerModel(id, name));
 	}
 
 	/**
 	 *	Parameterized constructor.
-	 *	@param	model	The persistence model for a Conductor object.
+	 *	@param	model	The persistence model for a Composer object.
 	 */
-	private Conductor(ConductorModel model)	{
+	private Composer(ComposerModel model)	{
 		setModel(model);
-
-		/*	initially no Boat and no leases, but we do have empty collections		*/
-		setListOfBoats(new ArrayList<Boat>());
-//		setListOfLeases(new ArrayList<Lease>());
 	}
 
 
 	/* ACCESSORS	--------------------------------------------------	*/
-	public ConductorModel getModel()				{ return model;												}
-	public ConductorPK getPrimaryKey()			{ return getModel().getPrimarykey();					}
-	public String getNumber()						{ return getModel().getPrimarykey().getid(); 	}
- 	public String getName()							{ return getModel().getName();							}
-	public ArrayList<Boat>	getListOfBoats()	{ return listOfBoats;										}
-//	public ArrayList<Lease>	getListOfLeases()	{ return listOfLeases;										}
-
-	private ArrayList<Boat> getBoats()	{
-		ArrayList<Boat> list = new ArrayList<Boat>();
-		try	{
-			//list = (ArrayList<Boat>) Boat.findByConductor(this);
-		} catch (Exception ex)	{
-		}
-		return list;
-	}
-
-//	private ArrayList<Lease> getLeases(){
-//		ArrayList<Lease> list = new ArrayList<Lease>();
-////		list = Lease.findByConductor(this);
-//		return list;
-//	}
+	public ComposerModel getModel()				{ return model;												}
+	public ComposerPK getPrimaryKey()			{ return getModel().getPrimarykey();					}
+	public int getId()						{ return getModel().getPrimarykey().getId(); 	}
+ 	public String getComposerName()							{ return getModel().getComposerName();							}
 
 	
 	/* MODIFIERS	--------------------------------------------------	*/
-	private void setModel(ConductorModel model)	{ this.model = model;								}
+	private void setModel(ComposerModel model)	{ this.model = model;								}
 
-	private void setPrimarykey(ConductorPK pk)	{ getModel().setPrimarykey(pk);						}
+	private void setPrimarykey(ComposerPK pk)	{ getModel().setPrimarykey(pk);						}
 	public void setName(String name)				{
-		getModel().setName(name);
+		getModel().setComposerName(name);
 		update();
 	}
 
 	
-	private void setListOfBoats(ArrayList<Boat> boats)		{ listOfBoats = boats;						}
-//	private void setListOfLeases(ArrayList<Lease> leases)	{ listOfLeases = leases;					}
-
 
 	/* BEHAVIOR	-----------------------------------------------------	*/
 	/**
-	 *	Implementation of the "object" equals method.  Conductors objects are equal
+	 *	Implementation of the "object" equals method.  Composers objects are equal
 	 *	if their primary key's are equal.
 	 *	@return	True if the fields of this primary key object equal the
 	 *	contents of the fields from the passed primary key object, otherwise
 	 *	false, they are not equal.
 	 */
 	public boolean equals(Object obj)	{
-		return	obj instanceof Conductor
-			&&	(getNumber().equals(((Conductor) obj).getNumber())
-			);
+		return obj instanceof Composer && getId() == ((Composer) obj).getId();
 	}
 
 	/**
@@ -242,11 +209,9 @@ public class Composer		{
 	 * used in equals comparisons on the object is modified.
 	 *	@return	A hash code value for the object.
 	 */
-	public int hashCode() {
-		return	getNumber().concat(
-								getName()
-							).hashCode();
-	}
+//	public int hashCode() {
+//		return	getId();
+//	}
 
 	/**
 	 *	Flush cached attribute values to the datastore.
@@ -264,79 +229,19 @@ public class Composer		{
 	
 	public String toString()	{ return this.toString(", ");				}
 	public String toString(String sep)	{
-		return "number=" + getNumber()
-				+ sep + "name=" + getName()
-				+ sep + "listOfBoats=" + getListOfBoats()
-//				+ sep + "listOfLeases=" + getListOfLeases()
-				+ sep + "boats=" + getBoats()
-//				+ sep + "leases=" + getLeases()
-			;
+		return "number=" + getId()
+				+ sep + "name=" + getComposerName();
 	}
 
-	/**
-	 *	Get an iterator to the list of boats for this Conductor.
-	 * 
-	 * @return 
-	 */
-	public Iterator<Boat> boats()					{ return getBoats().iterator();								}
-
-//	/**
-//	 *	Get an iterator to the list of leases for this Conductor.
-//	 * 
-//	 * @return 
-//	 */
-//	public Iterator leases()				{ return getLeases().iterator();								}
 	
 	/**
-	 *	Add a boat to this Conductor.
-	 * 
-	 * @param boat 
-	 */
-	public void addBoat(Boat boat)	{
-		if (!getListOfBoats().contains(boat))	{
-			getListOfBoats().add(boat);
-		}
-	}
-
-	/**
-	 *	Remove a boat from this Conductor
-	 * 
-	 * @param boat 
-	 */
-	public void removeBoat(Boat boat)	{
-		getBoats().remove(boat);
-	}
-
-//	/**
-//	 *	Add a lease to this Conductor
-//	 * 
-//	 * @param lease 
-//	 */
-//	public void addLease(Lease lease)	{
-//		if (!getLeases().contains(lease))	{
-//			getLeases().add(lease);
-//		}
-//	}
-
-//	/**
-//	 *	Remove a lease from this Conductor
-//	 * 
-//	 * @param lease 
-//	 */
-//	public void removeLease(Lease lease)	{
-//		getLeases().remove(lease);
-//	}
-	
-	
-
-	/**
-	 *	Remove a Conductor from the data store (by primary key).
+	 *	Remove a Composer from the data store (by primary key).
 	 * @return 
 	 * @throws sql.NoSuchEntityException
 	 * @throws sql.DAOSysException 
 	 */
-	public Conductor remove()	throws NoSuchEntityException, DAOSysException	{
-		Conductor c = null;
+	public Composer remove()	throws NoSuchEntityException, DAOSysException	{
+		Composer c = null;
 		if (removeByPrimarykey(getPrimaryKey()) > 0)	{
 			c = this;
 		}
@@ -350,10 +255,10 @@ public class Composer		{
 	 */
 	private void load() throws DAOSysException		{
 		if (_debug) System.out.println("C:load()");
-		ConductorDAO dao = null;
+		ComposerDAO dao = null;
 		try	{
-			dao = (ConductorDAO) DAOFactory.getDAO(className);
-			setModel((ConductorModel)dao.dbLoad(getPrimaryKey()));
+			dao = (ComposerDAO) DAOFactory.getDAO(className);
+			setModel((ComposerModel)dao.dbLoad(getPrimaryKey()));
 
 		} catch (Exception ex)	{
 			throw new DAOSysException(ex.getMessage());
@@ -366,9 +271,9 @@ public class Composer		{
 	 */
 	private void store()	throws DAOSysException		{
 		if (_debug) System.out.println("C:store()");
-		ConductorDAO dao = null;
+		ComposerDAO dao = null;
 		try	{
-			dao = (ConductorDAO) DAOFactory.getDAO(className);
+			dao = (ComposerDAO) DAOFactory.getDAO(className);
 			dao.dbStore(getModel());
 		} catch (Exception ex)	{
 			throw new DAOSysException(ex.getMessage());
@@ -381,18 +286,15 @@ public class Composer		{
 	private static final boolean _debug = false;
 
 	/** Class name for static method purposes.								*/
-	private static String className = "marina.Conductor";
+	private static String className = "Domain.Composer";
 	
-	/** Persistence model for a Conductor object.								*/
-	private ConductorModel model;
+	/** Persistence model for a Composer object.								*/
+	private ComposerModel model;
 
-	
-	/* REFERENCE ATTRIBUTES	-----------------------------------------	*/
- 	/** Boat for this Conductor.													*/
-	private ArrayList<Boat> listOfBoats;
 
-//	/** Lease for this Conductor.													*/
+
+//	/** Lease for this Composer.													*/
 //	private ArrayList<Lease> listOfLeases;
 
 
-}	/*	End of CLASS:	Conductor.java				*/
+}	/*	End of CLASS:	Composer.java				*/
