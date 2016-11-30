@@ -1,5 +1,8 @@
 package Domain;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Collection;
 
 import SQL.CoreDAO;
@@ -7,7 +10,7 @@ import SQL.CoreDAOImpl;
 import SQL.DAOSysException;
 import SQL.NoSuchEntityException;
 
-public class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, ComposistionsPK>{
+public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, ComposistionsPK>{
 
 	
 	public ComposistionsDAO() {
@@ -21,22 +24,10 @@ public class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Composistio
 	}
 	
 	@Override
-	public void dbInsert(ComposistionModel model) throws DAOSysException {
-		dbInsert(model, ComposistionsDAO.Insert_STM);
-		
-	}
-
-	@Override
-	public void dbInsert(ComposistionModel model, String insertStm) throws DAOSysException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public ComposistionModel dbSelectByPrimaryKey(ComposistionsPK primarykey)
 			throws DAOSysException, NoSuchEntityException {
-		// TODO Auto-generated method stub
-		return null;
+			
+		return dbSelectByPrimaryKey(primarykey, );
 	}
 
 	@Override
@@ -87,5 +78,7 @@ public class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Composistio
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	
+	public static final String SELECT_STM = "SELECT" + 
 }
