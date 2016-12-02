@@ -12,9 +12,6 @@ public class ComposistionModel extends CorePersistenceModel<ComposistionsPK>{
 	public ComposistionModel(ComposistionsPK primaryKey){
 		super(primaryKey);
 	}
-	public ComposistionsPK getPrimarykey(int i){
-		return (ComposistionsPK) super.getPrimarykey();
-	}
 	public void setPrimarykey(ComposistionsPK pk){ super.setPrimarykey(pk);}
 
 }
