@@ -45,17 +45,35 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Co
 		}
 		try{
 			connection = connectToDB();
+			preparedStm = connection.prepareStatement(selectStm);
+			preparedStm.setString(1, pk.getComposer());
+			rs = preparedStm.executeQuery();
+			
+			result = rs.next();
+			if(result){
+				model = new ComposistionModel();
+				model.setPrimarykey(new ComposistionsPK(rs.getString(1), rs.getString(2)));
+			}else{
+				throw new NoSuchEntityException("Composistion composer for <" + primarykey + "> nor found in the database");
+			}
 			
 		}catch(SQLException exception){
-			throw new DAOSysException(msg)
+			throw new DAOSysException("dbSelectByPrimaryKey() SQL Exception\n" + exception.getMessage());
+		}finally{
+			try{
+				releaseAll(rs, preparedStm, connection);
+				
+			}catch(Exception ex){
+				System.out.println("ERROR releasing resources <" + ex.toString());
+			}
 		}
-		return null;
+		return model;
 	}
 
 	@Override
 	public Collection<ComposistionsPK> dbSelectAll() throws DAOSysException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return dbSelectAll(DELETE_STATEMENT);
 	}
 
 	@Override
@@ -78,8 +96,7 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Co
 
 	@Override
 	public int dbRemove(ComposistionsPK primarykey) throws DAOSysException {
-		// TODO Auto-generated method stub
-		return 0;
+		return dbRemove(primarykey, DELETE_STATEMENT);
 	}
 
 	@Override
@@ -93,7 +110,8 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Co
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+	private static final String DELETE_STATEMENT = 
+			"DELETE FROM " + "Composition" + " WHERE composer = ?";
 	
 	public static final String SELECT_STM = "SELECT" + "composer, " + "compositionName "
 										  + "FROM " + "Composition " + "WHERE composer = ?";
