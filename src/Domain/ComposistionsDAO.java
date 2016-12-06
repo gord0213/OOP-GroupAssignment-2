@@ -12,7 +12,7 @@ import SQL.CoreDAOImpl;
 import SQL.DAOSysException;
 import SQL.NoSuchEntityException;
 
-public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, ComposistionsPK>{
+public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionsModel, ComposistionsPK>{
 
 	
 	public ComposistionsDAO() {
@@ -26,20 +26,20 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Co
 	}
 	
 	@Override
-	public ComposistionModel dbSelectByPrimaryKey(ComposistionsPK primarykey)
+	public ComposistionsModel dbSelectByPrimaryKey(ComposistionsPK primarykey)
 			throws DAOSysException, NoSuchEntityException {
 			
 		return dbSelectByPrimaryKey(primarykey, SELECT_STM);
 	}
 
 	@Override
-	public ComposistionModel dbSelectByPrimaryKey(ComposistionsPK primarykey, String selectStm)
+	public ComposistionsModel dbSelectByPrimaryKey(ComposistionsPK primarykey, String selectStm)
 			throws DAOSysException, NoSuchEntityException {
 		ComposistionsPK pk = (ComposistionsPK) primarykey;
 		Connection connection = null;
 		PreparedStatement preparedStm = null;
 		ResultSet rs = null;
-		ComposistionModel model = null;
+		ComposistionsModel model = null;
 		boolean result = false;
 		if (selectStm == null){
 			selectStm = SELECT_STM;
@@ -49,10 +49,10 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Co
 			preparedStm = connection.prepareStatement(selectStm);
 			preparedStm.setString(1, pk.getComposer());
 			rs = preparedStm.executeQuery();
-			
+			System.out.println("got into the select by primary after query");
 			result = rs.next();
 			if(result){
-				model = new ComposistionModel();
+				model = new ComposistionsModel();
 				model.setPrimarykey(new ComposistionsPK(rs.getString(1), rs.getString(2)));
 			}else{
 				throw new NoSuchEntityException("Composistion composer for <" + primarykey + "> nor found in the database");
@@ -74,7 +74,7 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Co
 	@Override
 	public Collection<ComposistionsPK> dbSelectAll() throws DAOSysException {
 		
-		return dbSelectAll(DELETE_STATEMENT);
+		return dbSelectAll(SELECT_DISTINCT_STM);
 	}
 
 	@Override
@@ -110,14 +110,14 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Co
 	}
 
 	@Override
-	public void dbUpdate(ComposistionModel data) throws DAOSysException {
+	public void dbUpdate(ComposistionsModel data) throws DAOSysException {
 		dbUpdate(data, ComposistionsDAO.UPDATE_STM);
 		
 	}
 
 	@Override
-	public void dbUpdate(ComposistionModel data, String updateStm) throws DAOSysException {
-		ComposistionModel model = data;
+	public void dbUpdate(ComposistionsModel data, String updateStm) throws DAOSysException {
+		ComposistionsModel model = data;
 		Connection connection = null;
 		PreparedStatement preparedStm = null;
 		try	{
@@ -218,7 +218,7 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionModel, Co
 	}
 	
 	private static final String SELECT_DISTINCT_STM = 
-			"SELECT DISTINVT composer, compositionName FROM " + "Composition";
+			"SELECT DISTINCT composer, compositionName FROM " + "Composition";
 	private static final String DELETE_STATEMENT = 
 			"DELETE FROM " + "Composition" + " WHERE composer = ?";
 	

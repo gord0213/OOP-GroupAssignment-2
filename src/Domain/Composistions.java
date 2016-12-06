@@ -20,7 +20,7 @@ public class Composistions {
 	private static String className = "Domain.Composistions";
 	
 	/** Persistence model for a Composistion object.								*/
-	private ComposistionModel model;
+	private ComposistionsModel model;
 	
 
 	/* STATIC PRE-OBJECT BEHAVIOR	-----------------------------------	*/
@@ -36,9 +36,10 @@ public class Composistions {
 		if (_debug) 
 			System.out.println("C:create:" + composer +" and "+ compositionName);
 
-		ComposistionModel model = new ComposistionModel(composer, compositionName);
+		ComposistionsModel model = new ComposistionsModel(composer, compositionName);
 		ComposistionsDAO dao = null;
 		try	{
+			System.out.println("In compositions .java");
 			dao = (ComposistionsDAO) DAOFactory.getDAO(className);
 			dao.dbInsert(model);
 			
@@ -68,12 +69,12 @@ public class Composistions {
 		if (_debug) 
 			System.out.println("C:findByPrimarykey(" + primarykey + ")");
 
-		ComposistionModel model = null;
+		ComposistionsModel model = null;
 		Composistions Composistion = null;
 		ComposistionsDAO dao = null;
 		try	{
 			dao = (ComposistionsDAO) DAOFactory.getDAO(className);
-			model = (ComposistionModel) dao.dbSelectByPrimaryKey(primarykey);
+			model = (ComposistionsModel) dao.dbSelectByPrimaryKey(primarykey);
 			Composistion = new Composistions(model);
 			
 		}catch(Exception sqlex){
@@ -143,13 +144,13 @@ public class Composistions {
 	 *	@param	composer
 	 *	@param	composerName*/
 	private Composistions(String composer, String composerName)	{
-		this(new ComposistionModel(composer, composerName));
+		this(new ComposistionsModel(composer, composerName));
 	}//end Composistions constructor
 
 	
 	/**Parameterized constructor.
 	 *	@param	model	The persistence model for a Composistion object.*/
-	private Composistions(ComposistionModel model)	{
+	private Composistions(ComposistionsModel model)	{
 		setModel(model);
 
 		/*	initially no Boat and no leases, but we do have empty collections		
@@ -159,7 +160,7 @@ public class Composistions {
 	
 	
 	/* ACCESSORS	--------------------------------------------------	*/
-	public ComposistionModel getModel(){
+	public ComposistionsModel getModel(){
 		return model;
 	}//end getModel method
 	
@@ -182,7 +183,7 @@ public class Composistions {
  	
  	
 	/* MODIFIERS	--------------------------------------------------	*/
-	private void setModel(ComposistionModel model){
+	private void setModel(ComposistionsModel model){
 		this.model = model;
 	}//end setModel method
 
@@ -286,7 +287,7 @@ public class Composistions {
 		
 		try	{
 			dao = (ComposistionsDAO) DAOFactory.getDAO(className);
-			setModel((ComposistionModel)dao.dbLoad(getPrimaryKey()));
+			setModel((ComposistionsModel)dao.dbLoad(getPrimaryKey()));
 
 		}catch(Exception ex){
 			throw new DAOSysException(ex.getMessage());

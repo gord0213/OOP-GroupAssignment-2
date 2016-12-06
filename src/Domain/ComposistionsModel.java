@@ -2,14 +2,14 @@ package Domain;
 
 import SQL.CorePersistenceModel;
 
-public class ComposistionModel extends CorePersistenceModel<ComposistionsPK>{
+public class ComposistionsModel extends CorePersistenceModel<ComposistionsPK>{
 
-	public ComposistionModel(){ super(); }
-	public ComposistionModel(String composer,
+	public ComposistionsModel(){ super(); }
+	public ComposistionsModel(String composer,
 							 String compositionName){
 		this (new ComposistionsPK(composer, compositionName));
 	}
-	public ComposistionModel(ComposistionsPK primaryKey){
+	public ComposistionsModel(ComposistionsPK primaryKey){
 		super(primaryKey);
 	}
 	public void setPrimarykey(ComposistionsPK pk){ super.setPrimarykey(pk);}

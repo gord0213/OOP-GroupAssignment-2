@@ -276,6 +276,7 @@ public class Composer		{
 			dao = (ComposerDAO) DAOFactory.getDAO(className);
 			dao.dbStore(getModel());
 		} catch (Exception ex)	{
+	
 			throw new DAOSysException(ex.getMessage());
 		}
 	}

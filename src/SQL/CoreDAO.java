@@ -16,11 +16,10 @@ import java.util.Collection;
  * @author Reg
  */
 public interface CoreDAO<MD, PK>	{
-
 	public final static String DRIVER_NAME		= "com.mysql.jdbc.Driver";
-	public final static String URL				= "jdbc:mysql://localhost/mysql";
-	public final static String USER				= "apptest";
-	public final static String PASSWORD			= "test001";
+	public final static String URL				= "jdbc:mysql://localhost:3306/sympony";
+	public final static String USER				= "root";
+	public final static String PASSWORD			= "U1tit4wn608";
 
 	/**
 	 *	Insert state for an entity into the datastore.

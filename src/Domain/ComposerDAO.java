@@ -111,6 +111,7 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
 		boolean result = false;
 		ComposerModel model = new ComposerModel();
 		try	{
+			
 			connection = connectToDB();
 			preparedStm = connection.prepareStatement(selectStm);
 			preparedStm.setInt(1, pk.getId());
@@ -167,8 +168,9 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
 		try	{
 			connection = connectToDB();
 			preparedStm = connection.prepareStatement(selectStm);
+			
 			rs = preparedStm.executeQuery();
-
+			
 			list = new ArrayList<ComposerPK>();
 			while (rs.next())	{
 				list.add(new ComposerPK(rs.getInt(1)));
@@ -335,31 +337,31 @@ public class ComposerDAO extends CoreDAOImpl<ComposerModel, ComposerPK>{
 	private final static boolean _debug = false;
 
 	private static String SELECT_DISTINCT_STM =
-		"SELECT DISTINCT id FROM " + "Composer";
+					"SELECT DISTINCT id FROM " + "Composers";
 	
 	private static String DELETE_STM =
-		"DELETE FROM " + "Composer"
+		"DELETE FROM " + "Composers"
 		+ " WHERE id = ?";
 	
 	private static String UPDATE_STM =
-		"UPDATE " + "Composer"
+		"UPDATE " + "Composers"
 		+ " SET "
 		+ "CompserName = ? "
 		+ "where id = ?";
 
 	private static String SELECT_ALL_STM =
-		"SELECT DISTINCT id " + "FROM " + "Composer";
+					"SELECT DISTINCT id " + "FROM " + "Composers;";
 	
 	
 	
 	private static String SELECT_STM = "SELECT "
 		+ " id, "
-		+ " ComposerName, "
-		+ " FROM COMPOSER "
+		+ " ComposerName "
+		+ " FROM COMPOSERS "
 		+ " WHERE id = ?";
 		
 	private static String INSERT_STM = "INSERT INTO "
-		+ "Composer"
+		+ "Composers"
 		+ " VALUES "
 		+ "( ?, ? )";
 	
