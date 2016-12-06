@@ -39,7 +39,6 @@ public class Composistions {
 		ComposistionsModel model = new ComposistionsModel(composer, compositionName);
 		ComposistionsDAO dao = null;
 		try	{
-			System.out.println("In compositions .java");
 			dao = (ComposistionsDAO) DAOFactory.getDAO(className);
 			dao.dbInsert(model);
 			

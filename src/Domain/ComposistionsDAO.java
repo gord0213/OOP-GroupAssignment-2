@@ -12,17 +12,21 @@ import SQL.CoreDAOImpl;
 import SQL.DAOSysException;
 import SQL.NoSuchEntityException;
 
-public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionsModel, ComposistionsPK>{
+public class ComposistionsDAO extends CoreDAOImpl<ComposistionsModel, ComposistionsPK>{
 
 	
 	public ComposistionsDAO() {
 		this(CoreDAO.DRIVER_NAME, CoreDAO.URL, CoreDAO.USER, CoreDAO.PASSWORD);
+		
+
 	}
 	public ComposistionsDAO(String drivername,
 								String url,
 								String user,
 								String password){
+		
 		super(drivername, url, user, password);
+
 	}
 	
 	@Override
@@ -49,7 +53,6 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionsModel, C
 			preparedStm = connection.prepareStatement(selectStm);
 			preparedStm.setString(1, pk.getComposer());
 			rs = preparedStm.executeQuery();
-			System.out.println("got into the select by primary after query");
 			result = rs.next();
 			if(result){
 				model = new ComposistionsModel();
@@ -227,4 +230,16 @@ public abstract class ComposistionsDAO extends CoreDAOImpl<ComposistionsModel, C
 	
 	public static final String SELECT_STM = "SELECT " + "composer, " + "compositionName "
 										  + "FROM " + "Composition " + "WHERE composer = ?";
+
+	
+	@Override
+	public void dbInsert(ComposistionsModel model) throws DAOSysException {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void dbInsert(ComposistionsModel model, String insertStm) throws DAOSysException {
+		// TODO Auto-generated method stub
+		
+	}
 }

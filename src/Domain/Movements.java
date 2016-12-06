@@ -28,7 +28,7 @@ public class Movements		{
 	 *	@param	number	The movement's number.
 	 *	@param	name	The movement's name.
 	 */
-	public static Movements create(String composer, String composition, String number,
+	public static Movements create(String composer, String composition, int number,
 											String name)
 								throws CreateException				{
 		if (_debug) System.out.println("C:create:" + composer + ", " + composition + ", " + number + ", " + name);
@@ -104,13 +104,7 @@ public class Movements		{
 				MovementsPK cpk = itr.next();
 				try	{
 					Movements movements = Movements.findByPrimarykey(cpk);
-//					/* Add boat references for this movements.				*/
-//					movements.setBoats(((ArrayList<Boat>) Boat.findByCustomer(movements)));
 
-//					/* Add leases for this movements							*/
-					
-					
-					/* Add this movements to the list.						*/
 					listOfCustomers.add(movements);
 
 				} catch (Exception ex)	{
@@ -159,7 +153,7 @@ public class Movements		{
 	 *	@param	name
 
 	 */
-	private Movements(String composer, String composition, String number, String name)	{
+	private Movements(String composer, String composition, int number, String name)	{
 		this(new MovementsModel(composer, composition, number, name));
 	}
 
@@ -179,7 +173,7 @@ public class Movements		{
 	public MovementsPK getPrimaryKey()				{ return getModel().getPrimarykey();}
 	public String getComposer()						{ return getModel().getPrimarykey().getComposer();}
  	public String getComposition()					{ return getModel().getComposition();}
-	public String getNumber()						{ return getModel().getPrimarykey().getNumber();}
+	public int getNumber()						{ return getModel().getPrimarykey().getNumber();}
  	public String getName()							{ return getModel().getName();}
 					
 
@@ -205,7 +199,7 @@ public class Movements		{
 	 */
 	public boolean equals(Object obj)	{
 		return	obj instanceof Movements
-			&&	(getNumber().equals(((Movements) obj).getNumber())
+			&&	(toString().equals(((Movements) obj).toString())
 			);
 	}
 
@@ -218,8 +212,7 @@ public class Movements		{
 	 *	@return	A hash code value for the object.
 	 */
 	public int hashCode() {
-		return	getNumber().concat(
-								getName()
+		return	(toString()
 								
 							).hashCode();
 	}

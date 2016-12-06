@@ -21,7 +21,7 @@ public class MovementsModel extends SQL.CorePersistenceModel<MovementsPK>	{
 	 * @param number
 	 * @param name 
 	 */
-	public MovementsModel(String composer, String composition, String number, String name) {
+	public MovementsModel(String composer, String composition, int number, String name) {
 		this(new MovementsPK(composer, composition,number, name));
 	}
 
@@ -44,7 +44,7 @@ public class MovementsModel extends SQL.CorePersistenceModel<MovementsPK>	{
 	/* ACCESSORS	--------------------------------------------------	*/
 	public String getComposer()				{ return getPrimarykey().getComposer();}
 	public String getComposition()			{ return getPrimarykey().getComposition();}
-	public String getNumber()				{ return getPrimarykey().getNumber();}
+	public int getNumber()				{ return getPrimarykey().getNumber();}
  	public String getName()					{ return getPrimarykey().getName();}
 	
 

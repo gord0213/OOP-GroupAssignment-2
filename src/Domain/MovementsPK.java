@@ -20,9 +20,9 @@ public class MovementsPK implements java.io.Serializable	{
 	 *	@param	number	The movement's number.
 	 *	@param	name	The movement's name.
 	 */
-	public MovementsPK(String composer, String Composition, String number, String name)	{
+	public MovementsPK(String composer, String Composition, int number, String name)	{
 		this.composer = composer;
-		this.composition = composition;
+		this.composition = Composition;
 		this.name = name;
 		this.number = number;		}
 
@@ -54,7 +54,7 @@ public class MovementsPK implements java.io.Serializable	{
 	 *	Get the movement's Number.
 	 *	@return	The movement's number.
 	 */
-	public String getNumber()	{ return number;		}
+	public int getNumber()	{ return number;		}
 
 	/**
 	 *	Get the movement's Name.
@@ -80,7 +80,7 @@ public class MovementsPK implements java.io.Serializable	{
 	 */
 	public boolean equals(Object obj)	{
 		return	obj instanceof MovementsPK
-			&&	getNumber().equals(((MovementsPK) obj).getNumber()
+			&&	toString().equals(((MovementsPK) obj).toString()
 					);
 	}
 
@@ -93,7 +93,7 @@ public class MovementsPK implements java.io.Serializable	{
 	 *	@return	A hash code value for the object.
 	 */
 	public int hashCode() {
-		return	getNumber().hashCode();
+		return	toString().hashCode();
 	}
 
 
@@ -107,7 +107,7 @@ public class MovementsPK implements java.io.Serializable	{
 	 */
 	private String composer;
 	private String composition;
-	private String number;
+	private int number;
 	private String name;
 
 }	/*	End of Class:	MovementsPK.java				*/

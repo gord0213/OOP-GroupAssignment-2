@@ -93,13 +93,13 @@ public class MovementsDAO extends CoreDAOImpl<MovementsModel, MovementsPK>	{
 		try	{
 			connection = connectToDB();
 			preparedStm = connection.prepareStatement(selectStm);
-			preparedStm.setString(1, pk.getNumber());
+			
 			rs = preparedStm.executeQuery();
 
 			result = rs.next();
 			if (result)	{
 				
-
+				model.setPrimarykey(new MovementsPK(rs.getString(1), rs.getString(2),rs.getInt(3) ,rs.getString(4)));
 
 			}	else	{
 				throw new NoSuchEntityException("Movements ID for <"
@@ -147,11 +147,13 @@ public class MovementsDAO extends CoreDAOImpl<MovementsModel, MovementsPK>	{
 			connection = connectToDB();
 			preparedStm = connection.prepareStatement(selectStm);
 			rs = preparedStm.executeQuery();
-
+			System.out.println(rs.toString() + " in movements DAO dbSellectAll");
+			
 			list = new ArrayList<MovementsPK>();
 			while (rs.next())	{
-				list.add(new MovementsPK(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+				list.add(new MovementsPK(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4)));
 			}
+			System.out.println(list.toString() + "Priting off the MOVEMENTSPK in DAOMOVEMENTS");
 
 		}	catch (SQLException sex)	{
 			throw new DAOSysException(
@@ -195,7 +197,7 @@ public class MovementsDAO extends CoreDAOImpl<MovementsModel, MovementsPK>	{
 			/*	Grab values from persistent fields to store in database	*/
 			preparedStm.setString(1, model.getComposer());
 			preparedStm.setString(2, model.getComposition());
-			preparedStm.setString(3, model.getNumber());
+			preparedStm.setInt(3, model.getNumber());
 			preparedStm.setString(4, model.getName());
 			
  			int rowCount = preparedStm.executeUpdate();
@@ -246,7 +248,7 @@ public class MovementsDAO extends CoreDAOImpl<MovementsModel, MovementsPK>	{
 		try	{
 			connection = connectToDB();
 			preparedStm = connection.prepareStatement(deleteStm);
-			preparedStm.setString(1, pk.getNumber());
+			//preparedStm.setString(1, pk.getNumber());
 			result = preparedStm.executeUpdate();
 
 			if (result == 0)	{
@@ -332,7 +334,7 @@ public class MovementsDAO extends CoreDAOImpl<MovementsModel, MovementsPK>	{
 		+ "where number = ?";
 
 	private static String SELECT_ALL_STM =
-		"SELECT DISTINCT number " + "FROM " + "Movements";
+		"SELECT DISTINCT * " + "FROM " + "Movements";
 	
 	
 	
